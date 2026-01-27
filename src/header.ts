@@ -39,7 +39,7 @@ const genericTemplate = `
 `.substring(1)
 
 /**
- * Template spécial pour Python (compatible flake8 - max 79 caractères)
+ * Special template for Python (compatible flake8 - max 79 characters).
  */
 const pythonTemplate = `
 # ########################################################################### #
@@ -60,7 +60,7 @@ const pythonTemplate = `
  * Get specific header template for languageId
  */
 const getTemplate = (languageId: string) => {
-  // Utiliser le template spécial pour Python
+  // Use the special template for Python.
   if (languageId === 'python') {
     return pythonTemplate
   }
