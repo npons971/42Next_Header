@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [1.0.3] - 2026-01-27
 
+### Added
+- Dependencies (ovsx) to publish on OpenVSX
+
 ### Fixed
 - Header more space for "FILENAME" & "AUTHOR"
 - URL to the Github Issues Page
