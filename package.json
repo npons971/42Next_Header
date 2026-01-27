@@ -7,12 +7,12 @@
   "icon": "42.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/npons/42Next_Header"
+    "url": "https://github.com/npons971/42Next_Header"
   },
   "bugs": {
-    "url": "https://github.com/npons/42Next_Header/issues"
+    "url": "https://github.com/npons971/42Next_Header/issues"
   },
-  "homepage": "https://github.com/npons/42Next_Header",
+  "homepage": "https://github.com/npons971/42Next_Header",
   "license": "MIT",
   "keywords": [
     "42",
