@@ -15,8 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Python flake8 compliant header (79 characters)
 - Modern dependencies (Node 20+ support)
 - Installation scripts for 42 schools (without npm)
-- Comprehensive documentation (README, INSTALL, PUBLISH)
-- GitHub Actions workflow for building
+- Comprehensive documentation
 
 ### Changed
 - Updated from deprecated `vscode` module to `@types/vscode`
