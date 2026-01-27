@@ -107,7 +107,7 @@ The header automatically updates the "Updated" timestamp and author when you sav
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/npons/42Next_Header/issues)
+- **Issues**: [GitHub Issues](https://github.com/npons971/42Next_Header/issues)
 
 ---
 
