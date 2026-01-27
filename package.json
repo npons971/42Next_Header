@@ -2,7 +2,7 @@
   "name": "42next-header",
   "displayName": "42Next Header",
   "description": "42 header for VSCode with Python support (flake8)",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "nopons",
   "icon": "42.png",
   "repository": {
