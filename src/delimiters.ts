@@ -14,6 +14,7 @@ const semicolons = [';; ', ' ;;']
 const parens = ['(* ', ' *)']
 const dashes = ['-- ', ' --']
 const percents = ['%% ', ' %%']
+const pythonStyle = ['# ', ''] // Ajout pour flake8.
 
 export const languageDemiliters: { [lang: string]: string[] | undefined } = {
   'c': slashes,
@@ -41,7 +42,7 @@ export const languageDemiliters: { [lang: string]: string[] | undefined } = {
   'php': slashes,
   'plaintext': hashes,
   'powershell': hashes,
-  'python': hashes,
+  'python': pythonStyle, // Ajout pour flake8.
   'r': hashes,
   'ruby': hashes,
   'rust': slashes,

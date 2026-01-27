@@ -39,9 +39,32 @@ const genericTemplate = `
 `.substring(1)
 
 /**
+ * Template spécial pour Python (compatible flake8 - max 79 caractères)
+ */
+const pythonTemplate = `
+# #############################################################################
+# #                                                                           #
+# #                                                       :::      ::::::::   #
+# #   $FILENAME_________________________________        :+:      :+:    :+:   #
+# #                                                   +:+ +:+         +:+     #
+# #   By: $AUTHOR_________________________________   +#+  +:+       +#+      #
+# #                                               +#+#+#+#+#+   +#+           #
+# #   Created: $CREATEDAT_________ by $CREATEDBY_      #+#    #+#            #
+# #   Updated: $UPDATEDAT_________ by $UPDATEDBY_      ###   ########.fr     #
+# #                                                                           #
+# #############################################################################
+
+`.substring(1)
+
+/**
  * Get specific header template for languageId
  */
 const getTemplate = (languageId: string) => {
+  // Utiliser le template spécial pour Python
+  if (languageId === 'python') {
+    return pythonTemplate
+  }
+  
   const [left, right] = languageDemiliters[languageId]
   const width = left.length
 
@@ -79,8 +102,15 @@ export const supportsLanguage = (languageId: string) =>
  * Returns current header text if present at top of document
  */
 export const extractHeader = (text: string): string | null => {
-  const headerRegex = `^(.{80}(\r\n|\n)){10}`
-  const match = text.match(headerRegex)
+  // Try standard 80-char header first
+  let headerRegex = `^(.{80}(\r\n|\n)){10}`
+  let match = text.match(headerRegex)
+  
+  // If not found, try Python 79-char header
+  if (!match) {
+    headerRegex = `^(.{79}(\r\n|\n)){10}`
+    match = text.match(headerRegex)
+  }
 
   return match ? match[0].split('\r\n').join('\n') : null
 }
@@ -96,7 +126,9 @@ const fieldRegex = (name: string) =>
  * Get value for given field name from header string
  */
 const getFieldValue = (header: string, name: string) => {
-  const [_, offset, field] = genericTemplate.match(fieldRegex(name))
+  // Detect if it's a Python header (starts with #)
+  const template = header.trim().startsWith('# #####') ? pythonTemplate : genericTemplate
+  const [_, offset, field] = template.match(fieldRegex(name))
 
   return header.substr(offset.length, field.length)
 }
@@ -105,7 +137,9 @@ const getFieldValue = (header: string, name: string) => {
  * Set field value in header string
  */
 const setFieldValue = (header: string, name: string, value: string) => {
-  const [_, offset, field] = genericTemplate.match(fieldRegex(name))
+  // Detect if it's a Python header (starts with #)
+  const template = header.trim().startsWith('# #####') ? pythonTemplate : genericTemplate
+  const [_, offset, field] = template.match(fieldRegex(name))
 
   return header.substr(0, offset.length)
     .concat(pad(value, field.length))
