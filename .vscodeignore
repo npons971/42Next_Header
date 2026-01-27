@@ -1,11 +1,39 @@
+# Development files
 .vscode/**
+.github/**
+.editorconfig
 typings/**
-out/test/**
-test/**
 src/**
-**/*.map
-.gitignore
 tsconfig.json
 vsc-extension-quickstart.md
+
+# Test files
+out/test/**
+test/**
+*.test.*
+
+# Documentation for development
+PUBLISH.md
+README_OLD.md
+
+# Scripts
+install.sh
+*.sh
+
+# Dependencies
 yarn.lock
-.editorconfig
+
+# Git
+.gitignore
+.gitattributes
+
+# Build artifacts
+*.vsix
+*.tar.gz
+*.zip
+
+# Misc
+.DS_Store
+*.log
+npm-debug.log*
+

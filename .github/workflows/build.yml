@@ -1,0 +1,37 @@
+name: Build VSIX
+
+on:
+  workflow_dispatch:  # Permet de lancer manuellement
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js 20
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+    
+    - name: Install dependencies
+      run: npm install
+    
+    - name: Compile
+      run: npm run vscode:prepublish
+    
+    - name: Install vsce
+      run: npm install -g @vscode/vsce
+    
+    - name: Package extension
+      run: vsce package
+    
+    - name: Upload VSIX
+      uses: actions/upload-artifact@v3
+      with:
+        name: vsix-package
+        path: '*.vsix'

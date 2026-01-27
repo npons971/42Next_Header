@@ -1,3 +1,36 @@
-out
-node_modules
+# Compiled output
+out/
+*.js.map
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build artifacts
 *.vsix
+*.tar.gz
+*.zip
+
+# Test files
+test.py
+text.c
+*.test.*
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+.cache/
+

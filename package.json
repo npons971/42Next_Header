@@ -1,23 +1,35 @@
 {
-  "name": "42header",
-  "displayName": "42 Header",
-  "description": "42 header for VSCode : www.42.fr",
-  "version": "0.42.7",
-  "publisher": "kube",
+  "name": "42next-header",
+  "displayName": "42Next Header",
+  "description": "42 header for VSCode with Python support (flake8)",
+  "version": "1.0.1",
+  "publisher": "nopons",
   "icon": "42.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kube/vscode-42header"
+    "url": "https://github.com/npons/42Next_Header"
   },
   "bugs": {
-    "url": "https://github.com/kube/vscode-42header/issues"
+    "url": "https://github.com/npons/42Next_Header/issues"
   },
-  "homepage": "https://github.com/kube/vscode-42header",
+  "homepage": "https://github.com/npons/42Next_Header",
   "license": "MIT",
+  "keywords": [
+    "42",
+    "header",
+    "42header",
+    "ecole42",
+    "school42",
+    "python",
+    "flake8",
+    "c",
+    "cpp"
+  ],
   "engines": {
     "vscode": "^1.6.0"
   },
   "categories": [
+    "Formatters",
     "Other"
   ],
   "activationEvents": [
@@ -55,13 +67,14 @@
   },
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
-    "compile": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install"
+    "compile": "tsc -watch -p ./"
   },
   "devDependencies": {
-    "@types/node": "^6.0.45",
-    "typescript": "^2.0.3",
-    "vscode": "^1.0.0"
+    "@types/node": "^16.0.0",
+    "@types/vscode": "^1.6.0",
+    "@vscode/vsce": "^3.7.1",
+    "typescript": "^4.9.0",
+    "vsce": "^2.15.0"
   },
   "dependencies": {
     "moment": "^2.15.0"

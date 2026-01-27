@@ -1,70 +1,118 @@
-<img
-  src="https://raw.githubusercontent.com/kube/vscode-42header/master/42.png" 
-  width=128>
+# 42 Header Next
 
-> **Searching for Maintainer.**
-> 
-> This project was done 7 years ago, which is an eternity relative to VSCode Lifespan.
-> I don't have time to maintain this, but I see a lot of people doing Pull Requests for it, or creating issues.
-> 
-> As there are no Unit Tests and no CI/CD, it makes it even harder to check for issues and PRs.
->
-> What I'd like to do is to give ownership to an "official" 42 organization on GitHub, where a group of students could maintain and update this project themselves.
->
-> If you are interested in such a thing, please ping me.
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/nopons.42next-header?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=nopons.42next-header)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-# 42 Header for VSCode
+Updated **42 header** extension for VSCode with **Python flake8 support** (79 characters).
 
-This extension provides the 42 header integration in VS Code.
+Based on the original [42header by kube](https://github.com/kube/vscode-42header), this version adds Python compatibility and modern tooling.
 
-```bash
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    vscode-42header                                    :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: kube <hello@kube.io>                       +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2013/11/18 13:37:42 by kube              #+#    #+#              #
-#    Updated: 2016/09/18 13:11:04 by kube             ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-```
+---
 
-## Install
+## Installation
 
-Launch Quick Open with <kbd>⌘</kbd>+<kbd>P</kbd> and enter
-```
-ext install 42header
-```
+1. Open VSCode
+2. Press `Ctrl+P` (or `Cmd+P` on Mac)
+3. Type: `ext install nopons.42next-header`
+4. Press Enter
 
-## Usage
+Or search "42 Header Next" in the Extensions view (`Ctrl+Shift+X`).
 
-### Insert a header
- - **macOS** : <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>H</kbd>
- - **Linux** / **Windows** : <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>H</kbd>.
+---
 
-Header is automatically updated on save.
+## ⚙️ Configuration ⚙️
 
+Set your 42 username and email in VSCode settings:
 
-## Configuration
+**Option 1: Via Settings UI**
+1. Press `Ctrl+,` (or `Cmd+,` on Mac)
+2. Search for "42header"
+3. Fill in:
+   - **Username**: Your 42 login
+   - **Email**: Your 42 email
 
-Default values for **username** and **email** are imported from environment variables.
+**Option 2: Via settings.json**
 
-To override these values, specify these properties in *User Settings* :
+Press `Ctrl+Shift+P` → "Preferences: Open User Settings (JSON)"
 
-```ts
+```json
 {
-  "42header.username": string,
-  "42header.email": string
+  "42header.username": "your-login",
+  "42header.email": "your-login@student.42.fr"
 }
 ```
 
+---
 
-## Issues
+## Usage
 
-In case of a bug, or missing feature, please create a [Github Pull Request](https://github.com/kube/vscode-42header/pulls).
+### Insert Header
 
-## License
+**Keyboard Shortcuts:**
+- **macOS**: `Cmd` + `Alt` + `H`
+- **Linux/Windows**: `Ctrl` + `Alt` + `H`
 
-MIT
+**Command Palette:**
+1. Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac)
+2. Type "Insert 42 header"
+3. Press Enter
+
+### Auto-Update
+
+The header automatically updates the "Updated" timestamp and author when you save the file.
+
+---
+
+## Header Examples
+
+### C/C++ (80 characters)
+
+```c
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: your-login <your-login@student.42.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/27 10:00:00 by your-login       #+#    #+#             */
+/*   Updated: 2026/01/27 12:00:00 by your-login      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+```
+
+### Python (79 characters - flake8)
+
+```python
+# ########################################################################### #
+# #                                                                           #
+# #                                                       :::      ::::::::   #
+# #   script.py                                          :+:      :+:    :+:  #
+# #                                                   +:+ +:+         +:+     #
+# #   By: your-login <your-login@student.42.fr>      +#+  +:+       +#+       #
+# #                                               +#+#+#+#+#+   +#+           #
+# #   Created: 2026/01/27 10:00:00 by your-login       #+#    #+#            #
+# #   Updated: 2026/01/27 12:00:00 by your-login      ###   ########.fr      #
+# #                                                                           #
+# ########################################################################### #
+```
+
+---
+
+## Credits
+
+- Original extension by [kube](https://github.com/kube/vscode-42header)
+
+---
+
+## Support
+
+- **Issues**: [GitHub Issues](https://github.com/npons/42Next_Header/issues)
+
+---
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
+---
