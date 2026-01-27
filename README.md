@@ -75,8 +75,8 @@ The header automatically updates the "Updated" timestamp and author when you sav
 /*                                                    +:+ +:+         +:+     */
 /*   By: your-login <your-login@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/27 10:00:00 by your-login       #+#    #+#             */
-/*   Updated: 2026/01/27 12:00:00 by your-login      ###   ########.fr       */
+/*   Created: 2026/01/27 10:00:00 by your-login       #+#    #+#              */
+/*   Updated: 2026/01/27 12:00:00 by your-login      ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 ```
@@ -91,8 +91,8 @@ The header automatically updates the "Updated" timestamp and author when you sav
 # #                                                   +:+ +:+         +:+     #
 # #   By: your-login <your-login@student.42.fr>      +#+  +:+       +#+       #
 # #                                               +#+#+#+#+#+   +#+           #
-# #   Created: 2026/01/27 10:00:00 by your-login       #+#    #+#            #
-# #   Updated: 2026/01/27 12:00:00 by your-login      ###   ########.fr      #
+# #   Created: 2026/01/27 10:00:00 by your-login       #+#    #+#             #
+# #   Updated: 2026/01/27 12:00:00 by your-login      ###   ########.fr       #
 # #                                                                           #
 # ########################################################################### #
 ```
