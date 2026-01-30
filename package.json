@@ -1,10 +1,10 @@
 {
-  "name": "42next-banner",
-  "displayName": "42Next Banner",
-  "description": "Distinctive 42-style file banner for VSCode with Python flake8 support",
-  "version": "1.0.3",
+  "name": "42next-header",
+  "displayName": "42 Header (Python + C)",
+  "description": "Updated 42-style file header for VSCode with Python flake8 norm support",
+  "version": "1.0.4",
   "publisher": "nopons",
-  "icon": "42next-icon.png",
+  "icon": "42Next.jpg",
   "repository": {
     "type": "git",
     "url": "https://github.com/npons971/42Next_Header"

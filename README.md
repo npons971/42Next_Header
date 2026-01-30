@@ -1,11 +1,11 @@
-# 42Next Banner
+# 42Next Header (Python + C)
 
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/nopons.42next-banner?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=nopons.42next-banner)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-Distinctive **42-style banner** extension for VSCode with **Python flake8 support** (79 characters).
+Updated **42-style banner** extension for VSCode with **Python flake8 norm support** (79 characters).
 
-Based on the original [42header by kube](https://github.com/kube/vscode-42header), this version adds Python compatibility and modern tooling while delivering a unique banner look and branding.
+Based on the original [42header by kube](https://github.com/kube/vscode-42header), this version adds Python compatibility and modern tooling while delivering a new header look.
 
 ---
 
@@ -13,10 +13,10 @@ Based on the original [42header by kube](https://github.com/kube/vscode-42header
 
 1. Open VSCode
 2. Press `Ctrl+P` (or `Cmd+P` on Mac)
-3. Type: `ext install nopons.42next-banner`
+3. Type: `ext install nopons.42next-header`
 4. Press Enter
 
-Or search "42Next Banner" in the Extensions view (`Ctrl+Shift+X`).
+Or search "42Next Header" in the Extensions view (`Ctrl+Shift+X`).
 
 ---
 
