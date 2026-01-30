@@ -105,6 +105,25 @@ The header automatically updates the "Updated" timestamp and author when you sav
 
 ---
 
+## 📦 Packaging
+
+To build the VSIX package locally:
+
+```bash
+# Install vsce (if not already installed)
+npm install -g @vscode/vsce
+
+# Build the package
+vsce package
+```
+
+To install the generated `.vsix` file:
+```bash
+code --install-extension 42next-header-x.x.x.vsix
+```
+
+---
+
 ## Support
 
 - **Issues**: [GitHub Issues](https://github.com/npons971/42Next_Header/issues)
