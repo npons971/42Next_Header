@@ -18,7 +18,7 @@ import {
 
 import {
   extractHeader, getHeaderInfo, renderHeader,
-  supportsLanguage, HeaderInfo
+  supportsLanguage, HeaderInfo, hasShebang, extractShebang
 } from './header'
 
 /**
@@ -68,23 +68,33 @@ const insertHeaderHandler = () => {
 
   if (supportsLanguage(document.languageId))
     activeTextEditor.edit(editor => {
-      const currentHeader = extractHeader(document.getText())
+      const documentText = document.getText()
+      const currentHeader = extractHeader(documentText)
+      const currentShebang = extractShebang(documentText)
+      const isPython = document.languageId === 'python'
+      
+      // Prepare shebang for Python files if not present
+      const shebang = isPython && !currentShebang ? '#!/usr/bin/env python3\n\n' : (currentShebang || '')
+      const header = renderHeader(
+        document.languageId,
+        newHeaderInfo(document, currentHeader ? getHeaderInfo(currentHeader) : undefined)
+      )
 
-      if (currentHeader)
+      if (currentHeader) {
+        // Calculate the number of lines to replace (shebang + blank line + header)
+        const shebangLines = currentShebang ? (currentShebang.match(/\n/g) || []).length : 0
+        const blankLineAfterShebang = currentShebang && documentText.substring(currentShebang.length, currentShebang.length + 1) === '\n' ? 1 : 0
+        const totalLines = shebangLines + blankLineAfterShebang + 12
+        
         editor.replace(
-          new Range(0, 0, 12, 0),
-          renderHeader(
-            document.languageId,
-            newHeaderInfo(document, getHeaderInfo(currentHeader))
-          )
+          new Range(0, 0, totalLines, 0),
+          shebang + header
         )
+      }
       else
         editor.insert(
           new Position(0, 0),
-          renderHeader(
-            document.languageId,
-            newHeaderInfo(document)
-          )
+          shebang + header
         )
     })
   else
@@ -99,14 +109,21 @@ const insertHeaderHandler = () => {
 const startUpdateOnSaveWatcher = (subscriptions: vscode.Disposable[]) =>
   vscode.workspace.onWillSaveTextDocument(event => {
     const document = event.document
-    const currentHeader = extractHeader(document.getText())
+    const documentText = document.getText()
+    const currentHeader = extractHeader(documentText)
+    const currentShebang = extractShebang(documentText)
+    const isPython = document.languageId === 'python'
 
     event.waitUntil(
       Promise.resolve(
         supportsLanguage(document.languageId) && currentHeader ?
           [
             TextEdit.replace(
-              new Range(0, 0, 12, 0),
+              new Range(0, 0, 
+                (currentShebang ? (currentShebang.match(/\n/g) || []).length : 0) +
+                (currentShebang && documentText.substring(currentShebang.length, currentShebang.length + 1) === '\n' ? 1 : 0) +
+                12, 0),
+              (currentShebang || (isPython ? '#!/usr/bin/env python3\n\n' : '')) +
               renderHeader(
                 document.languageId,
                 newHeaderInfo(document, getHeaderInfo(currentHeader))

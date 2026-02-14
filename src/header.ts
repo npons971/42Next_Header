@@ -99,17 +99,44 @@ export const supportsLanguage = (languageId: string) =>
   languageId in languageDemiliters
 
 /**
+ * Detect if text starts with a shebang
+ */
+export const hasShebang = (text: string): boolean =>
+  text.trimStart().startsWith('#!')
+
+/**
+ * Extract shebang from text if present
+ */
+export const extractShebang = (text: string): string | null => {
+  const match = text.match(/^(#!.*(?:\r\n|\n))/)
+  return match ? match[1].split('\r\n').join('\n') : null
+}
+
+/**
  * Returns current header text if present at top of document
  */
 export const extractHeader = (text: string): string | null => {
+  // Skip shebang if present
+  let offset = 0
+  const shebang = extractShebang(text)
+  if (shebang) {
+    offset = shebang.length
+    // Also skip empty line after shebang if present
+    if (text[offset] === '\n' || (text[offset] === '\r' && text[offset + 1] === '\n')) {
+      offset += text[offset] === '\r' ? 2 : 1
+    }
+  }
+  
+  const textAfterShebang = text.substring(offset)
+  
   // Try standard 80-char header first
   let headerRegex = `^(.{80}(\r\n|\n)){10}`
-  let match = text.match(headerRegex)
+  let match = textAfterShebang.match(headerRegex)
   
   // If not found, try Python 79-char header
   if (!match) {
     headerRegex = `^(.{79}(\r\n|\n)){10}`
-    match = text.match(headerRegex)
+    match = textAfterShebang.match(headerRegex)
   }
 
   return match ? match[0].split('\r\n').join('\n') : null

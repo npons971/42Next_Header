@@ -2,7 +2,7 @@
   "name": "42next-header",
   "displayName": "42 Header (Python + C)",
   "description": "Updated 42-style file header for VSCode with Python flake8 norm support",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "publisher": "nopons",
   "icon": "42Next.jpg",
   "repository": {

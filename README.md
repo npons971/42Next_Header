@@ -84,6 +84,8 @@ The header automatically updates the "Updated" timestamp and author when you sav
 ### Python (79 characters - flake8)
 
 ```python
+#!/usr/bin/env python3
+
 # ########################################################################### #
 # #                                                                           #
 # #                                                       :::      ::::::::   #
