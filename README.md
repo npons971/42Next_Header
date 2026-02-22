@@ -1,6 +1,6 @@
 # 42Next Header (Python + C)
 
-[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/nopons.42next-banner?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=nopons.42next-banner)
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/nopons.42next-banner?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=nopons.42next-header)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 Updated **42-style banner** extension for VSCode with **Python flake8 norm support** (79 characters).
