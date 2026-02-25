@@ -14,7 +14,6 @@ package-lock.json
 # Test files
 test.py
 text.c
-*.test.*
 
 # Logs
 *.log

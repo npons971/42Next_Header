@@ -18,7 +18,8 @@ import {
 
 import {
   extractHeader, getHeaderInfo, renderHeader,
-  supportsLanguage, HeaderInfo, hasShebang, extractShebang
+  supportsLanguage, HeaderInfo, hasShebang, extractShebang,
+  parseShebangDirective
 } from './header'
 
 /**
@@ -72,9 +73,15 @@ const insertHeaderHandler = () => {
       const currentHeader = extractHeader(documentText)
       const currentShebang = extractShebang(documentText)
       const isPython = document.languageId === 'python'
-      
-      // Prepare shebang for Python files if not present
-      const shebang = isPython && !currentShebang ? '#!/usr/bin/env python3\n\n' : (currentShebang || '')
+      const directive = currentHeader ? parseShebangDirective(currentHeader) : null
+
+      // Determine shebang based on directive
+      let shebang: string
+      if (directive === 'off') {
+        shebang = ''
+      } else {
+        shebang = currentShebang || (isPython ? '#!/usr/bin/env python3\n\n' : '')
+      }
       const header = renderHeader(
         document.languageId,
         newHeaderInfo(document, currentHeader ? getHeaderInfo(currentHeader) : undefined)
@@ -113,6 +120,15 @@ const startUpdateOnSaveWatcher = (subscriptions: vscode.Disposable[]) =>
     const currentHeader = extractHeader(documentText)
     const currentShebang = extractShebang(documentText)
     const isPython = document.languageId === 'python'
+    const directive = currentHeader ? parseShebangDirective(currentHeader) : null
+
+    // Determine shebang based on directive
+    let shebang: string
+    if (directive === 'off') {
+      shebang = ''
+    } else {
+      shebang = currentShebang || (isPython ? '#!/usr/bin/env python3\n\n' : '')
+    }
 
     event.waitUntil(
       Promise.resolve(
@@ -123,7 +139,7 @@ const startUpdateOnSaveWatcher = (subscriptions: vscode.Disposable[]) =>
                 (currentShebang ? (currentShebang.match(/\n/g) || []).length : 0) +
                 (currentShebang && documentText.substring(currentShebang.length, currentShebang.length + 1) === '\n' ? 1 : 0) +
                 12, 0),
-              (currentShebang || (isPython ? '#!/usr/bin/env python3\n\n' : '')) +
+              shebang +
               renderHeader(
                 document.languageId,
                 newHeaderInfo(document, getHeaderInfo(currentHeader))

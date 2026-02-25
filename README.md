@@ -63,6 +63,26 @@ The header automatically updates the "Updated" timestamp and author when you sav
 
 ---
 
+## Shebang Directive
+
+You can control automatic shebang insertion by adding a directive line **inside** the header block:
+
+| Directive        | Effect                                                          |
+|------------------|-----------------------------------------------------------------|
+| `shebang: off`   | No shebang is inserted or preserved (even for Python files).    |
+| `shebang: on`    | Shebang is preserved if present, or auto-added for Python.      |
+| *(no directive)* | Default behavior — Python files get a shebang if none exists.   |
+
+The directive is **case-insensitive** and tolerant to extra spaces (e.g. `SHEBANG:OFF`, `shebang : on`).
+
+If the directive appears multiple times, the **last occurrence** wins.
+
+**Example — disable shebang for a Python file:**
+
+Add `shebang: off` anywhere inside the header comment block (on its own line) and re-insert or save the file.
+
+---
+
 ## Header Examples
 
 ### C/C++ (80 characters)
