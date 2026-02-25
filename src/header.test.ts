@@ -1,48 +1,46 @@
 import { strict as assert } from 'assert'
-import { parseShebangDirective } from './header'
+import moment = require('moment')
+import { getHeaderInfo, renderHeader } from './header'
 
-describe('parseShebangDirective', () => {
-  it('should return "off" for "shebang: off"', () => {
-    assert.equal(parseShebangDirective('shebang: off'), 'off')
+const makeDate = (s: string) => moment(s, 'YYYY/MM/DD HH:mm:ss')
+
+const baseInfo = {
+  filename: 'test.py',
+  author: 'user <user@student.42.fr>',
+  createdBy: 'user',
+  createdAt: makeDate('2026/01/01 10:00:00'),
+  updatedBy: 'user',
+  updatedAt: makeDate('2026/01/01 12:00:00')
+}
+
+describe('shebang field in Python header', () => {
+  it('should render shebang: 1 in Python header', () => {
+    const header = renderHeader('python', { ...baseInfo, shebang: '1' })
+    assert.ok(header.includes('shebang: 1'))
   })
 
-  it('should return "on" for "shebang: on"', () => {
-    assert.equal(parseShebangDirective('shebang: on'), 'on')
+  it('should render shebang: 0 in Python header', () => {
+    const header = renderHeader('python', { ...baseInfo, shebang: '0' })
+    assert.ok(header.includes('shebang: 0'))
   })
 
-  it('should be case insensitive', () => {
-    assert.equal(parseShebangDirective('SHEBANG: ON'), 'on')
-    assert.equal(parseShebangDirective('SHEBANG:OFF'), 'off')
-    assert.equal(parseShebangDirective('Shebang: Off'), 'off')
-    assert.equal(parseShebangDirective('ShEbAnG : oN'), 'on')
+  it('should extract shebang value from Python header', () => {
+    const header1 = renderHeader('python', { ...baseInfo, shebang: '1' })
+    assert.equal(getHeaderInfo(header1).shebang, '1')
+
+    const header0 = renderHeader('python', { ...baseInfo, shebang: '0' })
+    assert.equal(getHeaderInfo(header0).shebang, '0')
   })
 
-  it('should tolerate extra spaces', () => {
-    assert.equal(parseShebangDirective('  shebang : on  '), 'on')
-    assert.equal(parseShebangDirective('shebang:off'), 'off')
-    assert.equal(parseShebangDirective('  shebang  :  off  '), 'off')
+  it('should default shebang to 1 when not specified', () => {
+    const header = renderHeader('python', baseInfo)
+    assert.ok(header.includes('shebang: 1'))
+    assert.equal(getHeaderInfo(header).shebang, '1')
   })
 
-  it('should return the last occurrence when multiple exist', () => {
-    assert.equal(parseShebangDirective('shebang: on\nshebang: off'), 'off')
-    assert.equal(parseShebangDirective('shebang: off\nshebang: on'), 'on')
-    assert.equal(parseShebangDirective('shebang: on\nsome line\nshebang: off\nanother line'), 'off')
-  })
-
-  it('should return null when no directive is present', () => {
-    assert.equal(parseShebangDirective(''), null)
-    assert.equal(parseShebangDirective('no directive here'), null)
-    assert.equal(parseShebangDirective('shebang is great'), null)
-  })
-
-  it('should handle CRLF line endings', () => {
-    assert.equal(parseShebangDirective('shebang: on\r\nshebang: off'), 'off')
-    assert.equal(parseShebangDirective('line1\r\nshebang: on\r\nline3'), 'on')
-  })
-
-  it('should not match invalid values', () => {
-    assert.equal(parseShebangDirective('shebang: yes'), null)
-    assert.equal(parseShebangDirective('shebang: true'), null)
-    assert.equal(parseShebangDirective('shebang: 1'), null)
+  it('should not have shebang field in C header', () => {
+    const header = renderHeader('c', baseInfo)
+    assert.ok(!header.includes('shebang:'))
+    assert.equal(getHeaderInfo(header).shebang, undefined)
   })
 })

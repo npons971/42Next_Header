@@ -17,7 +17,8 @@ export type HeaderInfo = {
   createdBy: string,
   createdAt: moment.Moment,
   updatedBy: string,
-  updatedAt: moment.Moment
+  updatedAt: moment.Moment,
+  shebang?: string
 }
 
 /**
@@ -43,7 +44,7 @@ const genericTemplate = `
  */
 const pythonTemplate = `
 # ########################################################################### #
-#                                                                             #
+#   shebang: $SHEBANG_                                                        #
 #                                                          :::      ::::::::  #
 #   $FILENAME_____________________________________       :+:      :+:    :+:  #
 #                                                      +:+ +:+         +:+    #
@@ -176,43 +177,43 @@ const setFieldValue = (header: string, name: string, value: string) => {
 /**
  * Extract header info from header string
  */
-export const getHeaderInfo = (header: string): HeaderInfo => ({
-  filename: getFieldValue(header, 'FILENAME'),
-  author: getFieldValue(header, 'AUTHOR'),
-  createdBy: getFieldValue(header, 'CREATEDBY'),
-  createdAt: parseDate(getFieldValue(header, 'CREATEDAT')),
-  updatedBy: getFieldValue(header, 'UPDATEDBY'),
-  updatedAt: parseDate(getFieldValue(header, 'UPDATEDAT'))
-})
-
-/**
- * Parse a "shebang: on/off" directive from the header text.
- * Returns the last occurrence found, or null if none.
- */
-export const parseShebangDirective = (headerText: string): 'on' | 'off' | null => {
-  const regex = /^\s*shebang\s*:\s*(on|off)\s*$/i
-  let result: 'on' | 'off' | null = null
-
-  for (const line of headerText.split(/\r\n|\n/)) {
-    const match = line.match(regex)
-    if (match) {
-      result = match[1].toLowerCase() as 'on' | 'off'
-    }
+export const getHeaderInfo = (header: string): HeaderInfo => {
+  const isPython = header.trim().startsWith('# #####')
+  const info: HeaderInfo = {
+    filename: getFieldValue(header, 'FILENAME'),
+    author: getFieldValue(header, 'AUTHOR'),
+    createdBy: getFieldValue(header, 'CREATEDBY'),
+    createdAt: parseDate(getFieldValue(header, 'CREATEDAT')),
+    updatedBy: getFieldValue(header, 'UPDATEDBY'),
+    updatedAt: parseDate(getFieldValue(header, 'UPDATEDAT'))
   }
 
-  return result
+  if (isPython) {
+    const shebangValue = getFieldValue(header, 'SHEBANG').trim()
+    info.shebang = shebangValue === '0' ? '0' : '1'
+  }
+
+  return info
 }
 
 /**
  * Renders a language template with header info
  */
-export const renderHeader = (languageId: string, info: HeaderInfo) => [
-  { name: 'FILENAME', value: info.filename },
-  { name: 'AUTHOR', value: info.author },
-  { name: 'CREATEDAT', value: formatDate(info.createdAt) },
-  { name: 'CREATEDBY', value: info.createdBy },
-  { name: 'UPDATEDAT', value: formatDate(info.updatedAt) },
-  { name: 'UPDATEDBY', value: info.updatedBy }
-].reduce((header, field) =>
-  setFieldValue(header, field.name, field.value),
-  getTemplate(languageId))
+export const renderHeader = (languageId: string, info: HeaderInfo) => {
+  const fields = [
+    { name: 'FILENAME', value: info.filename },
+    { name: 'AUTHOR', value: info.author },
+    { name: 'CREATEDAT', value: formatDate(info.createdAt) },
+    { name: 'CREATEDBY', value: info.createdBy },
+    { name: 'UPDATEDAT', value: formatDate(info.updatedAt) },
+    { name: 'UPDATEDBY', value: info.updatedBy }
+  ]
+
+  if (languageId === 'python') {
+    fields.unshift({ name: 'SHEBANG', value: info.shebang || '1' })
+  }
+
+  return fields.reduce((header, field) =>
+    setFieldValue(header, field.name, field.value),
+    getTemplate(languageId))
+}

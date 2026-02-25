@@ -65,21 +65,18 @@ The header automatically updates the "Updated" timestamp and author when you sav
 
 ## Shebang Directive
 
-You can control automatic shebang insertion by adding a directive line **inside** the header block:
+The Python header includes a built-in `shebang` field on its second line that controls automatic shebang insertion:
 
-| Directive        | Effect                                                          |
-|------------------|-----------------------------------------------------------------|
-| `shebang: off`   | No shebang is inserted or preserved (even for Python files).    |
-| `shebang: on`    | Shebang is preserved if present, or auto-added for Python.      |
-| *(no directive)* | Default behavior — Python files get a shebang if none exists.   |
+| Value          | Effect                                                          |
+|----------------|-----------------------------------------------------------------|
+| `shebang: 1`   | Shebang is preserved if present, or auto-added for Python. *(default)* |
+| `shebang: 0`   | No shebang is inserted or preserved (even for Python files).    |
 
-The directive is **case-insensitive** and tolerant to extra spaces (e.g. `SHEBANG:OFF`, `shebang : on`).
-
-If the directive appears multiple times, the **last occurrence** wins.
+To toggle the shebang, simply change the `1` to `0` (or vice versa) directly in the header and save the file. The shebang line (`#!/usr/bin/env python3`) will be automatically added or removed on the next save.
 
 **Example — disable shebang for a Python file:**
 
-Add `shebang: off` anywhere inside the header comment block (on its own line) and re-insert or save the file.
+Change `shebang: 1` to `shebang: 0` on the second line of the header, then save.
 
 ---
 
@@ -107,7 +104,7 @@ Add `shebang: off` anywhere inside the header comment block (on its own line) an
 #!/usr/bin/env python3
 
 # ########################################################################### #
-# #                                                                           #
+# #   shebang: 1                                                              #
 # #                                                       :::      ::::::::   #
 # #   script.py                                          :+:      :+:    :+:  #
 # #                                                   +:+ +:+         +:+     #

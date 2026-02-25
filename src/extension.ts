@@ -18,8 +18,7 @@ import {
 
 import {
   extractHeader, getHeaderInfo, renderHeader,
-  supportsLanguage, HeaderInfo, hasShebang, extractShebang,
-  parseShebangDirective
+  supportsLanguage, HeaderInfo, hasShebang, extractShebang
 } from './header'
 
 /**
@@ -73,19 +72,16 @@ const insertHeaderHandler = () => {
       const currentHeader = extractHeader(documentText)
       const currentShebang = extractShebang(documentText)
       const isPython = document.languageId === 'python'
-      const directive = currentHeader ? parseShebangDirective(currentHeader) : null
+      const headerInfo = newHeaderInfo(document, currentHeader ? getHeaderInfo(currentHeader) : undefined)
 
-      // Determine shebang based on directive
+      // Determine shebang based on header field
       let shebang: string
-      if (directive === 'off') {
-        shebang = ''
+      if (isPython) {
+        shebang = headerInfo.shebang === '0' ? '' : (currentShebang || '#!/usr/bin/env python3\n\n')
       } else {
-        shebang = currentShebang || (isPython ? '#!/usr/bin/env python3\n\n' : '')
+        shebang = currentShebang || ''
       }
-      const header = renderHeader(
-        document.languageId,
-        newHeaderInfo(document, currentHeader ? getHeaderInfo(currentHeader) : undefined)
-      )
+      const header = renderHeader(document.languageId, headerInfo)
 
       if (currentHeader) {
         // Calculate the number of lines to replace (shebang + blank line + header)
@@ -120,19 +116,19 @@ const startUpdateOnSaveWatcher = (subscriptions: vscode.Disposable[]) =>
     const currentHeader = extractHeader(documentText)
     const currentShebang = extractShebang(documentText)
     const isPython = document.languageId === 'python'
-    const directive = currentHeader ? parseShebangDirective(currentHeader) : null
+    const headerInfo = currentHeader ? newHeaderInfo(document, getHeaderInfo(currentHeader)) : null
 
-    // Determine shebang based on directive
+    // Determine shebang based on header field
     let shebang: string
-    if (directive === 'off') {
-      shebang = ''
+    if (isPython && headerInfo) {
+      shebang = headerInfo.shebang === '0' ? '' : (currentShebang || '#!/usr/bin/env python3\n\n')
     } else {
-      shebang = currentShebang || (isPython ? '#!/usr/bin/env python3\n\n' : '')
+      shebang = currentShebang || ''
     }
 
     event.waitUntil(
       Promise.resolve(
-        supportsLanguage(document.languageId) && currentHeader ?
+        supportsLanguage(document.languageId) && currentHeader && headerInfo ?
           [
             TextEdit.replace(
               new Range(0, 0, 
@@ -140,10 +136,7 @@ const startUpdateOnSaveWatcher = (subscriptions: vscode.Disposable[]) =>
                 (currentShebang && documentText.substring(currentShebang.length, currentShebang.length + 1) === '\n' ? 1 : 0) +
                 12, 0),
               shebang +
-              renderHeader(
-                document.languageId,
-                newHeaderInfo(document, getHeaderInfo(currentHeader))
-              )
+              renderHeader(document.languageId, headerInfo)
             )
           ]
           : [] // No TextEdit to apply
