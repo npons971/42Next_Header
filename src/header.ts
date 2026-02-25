@@ -186,6 +186,24 @@ export const getHeaderInfo = (header: string): HeaderInfo => ({
 })
 
 /**
+ * Parse a "shebang: on/off" directive from the header text.
+ * Returns the last occurrence found, or null if none.
+ */
+export const parseShebangDirective = (headerText: string): 'on' | 'off' | null => {
+  const regex = /^\s*shebang\s*:\s*(on|off)\s*$/i
+  let result: 'on' | 'off' | null = null
+
+  for (const line of headerText.split(/\r\n|\n/)) {
+    const match = line.match(regex)
+    if (match) {
+      result = match[1].toLowerCase() as 'on' | 'off'
+    }
+  }
+
+  return result
+}
+
+/**
  * Renders a language template with header info
  */
 export const renderHeader = (languageId: string, info: HeaderInfo) => [
