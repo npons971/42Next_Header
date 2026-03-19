@@ -4,6 +4,21 @@ All notable changes to the "42 Header Next" extension will be documented in this
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.2.0] - 2026-02-25
+
+### Added
+- Built-in `shebang` field in the Python header template (line 2)
+- `shebang: 1` (default) adds/preserves the shebang line
+- `shebang: 0` automatically removes the shebang line on save
+
+### Changed
+- Python header now has 10 lines with a dedicated shebang control field
+- Simplified directive system: edit the field directly in the header instead of adding free-text directives
+
+### Removed
+- `parseShebangDirective` function (replaced by the template field)
+- Free-text `shebang: on/off` directive parsing
+
 ## [1.1.0] - 2026-02-14
 
 ### Added

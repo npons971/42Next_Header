@@ -104,15 +104,15 @@ Change `shebang: 1` to `shebang: 0` on the second line of the header, then save.
 #!/usr/bin/env python3
 
 # ########################################################################### #
-# #   shebang: 1                                                              #
-# #                                                       :::      ::::::::   #
-# #   script.py                                          :+:      :+:    :+:  #
-# #                                                   +:+ +:+         +:+     #
-# #   By: your-login <your-login@student.42.fr>      +#+  +:+       +#+       #
-# #                                               +#+#+#+#+#+   +#+           #
-# #   Created: 2026/01/27 10:00:00 by your-login       #+#    #+#             #
-# #   Updated: 2026/01/27 12:00:00 by your-login      ###   ########.fr       #
-# #                                                                           #
+#   shebang: 1                                                                #
+#                                                          :::      ::::::::  #
+#   script.py                                            :+:      :+:    :+:  #
+#                                                      +:+ +:+         +:+    #
+#   By: your-login <your-login@student.42.fr>        +#+  +:+       +#+       #
+#                                                  +#+#+#+#+#+   +#+          #
+#   Created: 2026/01/27 10:00:00 by your-login          #+#    #+#            #
+#   Updated: 2026/01/27 12:00:00 by your-login         ###   ########.fr      #
+#                                                                             #
 # ########################################################################### #
 ```
 
