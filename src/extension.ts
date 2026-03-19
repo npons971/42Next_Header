@@ -72,13 +72,16 @@ const insertHeaderHandler = () => {
       const currentHeader = extractHeader(documentText)
       const currentShebang = extractShebang(documentText)
       const isPython = document.languageId === 'python'
-      
-      // Prepare shebang for Python files if not present
-      const shebang = isPython && !currentShebang ? '#!/usr/bin/env python3\n\n' : (currentShebang || '')
-      const header = renderHeader(
-        document.languageId,
-        newHeaderInfo(document, currentHeader ? getHeaderInfo(currentHeader) : undefined)
-      )
+      const headerInfo = newHeaderInfo(document, currentHeader ? getHeaderInfo(currentHeader) : undefined)
+
+      // Determine shebang based on header field
+      let shebang: string
+      if (isPython) {
+        shebang = headerInfo.shebang === '0' ? '' : (currentShebang || '#!/usr/bin/env python3\n\n')
+      } else {
+        shebang = currentShebang || ''
+      }
+      const header = renderHeader(document.languageId, headerInfo)
 
       if (currentHeader) {
         // Calculate the number of lines to replace (shebang + blank line + header)
@@ -113,21 +116,27 @@ const startUpdateOnSaveWatcher = (subscriptions: vscode.Disposable[]) =>
     const currentHeader = extractHeader(documentText)
     const currentShebang = extractShebang(documentText)
     const isPython = document.languageId === 'python'
+    const headerInfo = currentHeader ? newHeaderInfo(document, getHeaderInfo(currentHeader)) : null
+
+    // Determine shebang based on header field
+    let shebang: string
+    if (isPython && headerInfo) {
+      shebang = headerInfo.shebang === '0' ? '' : (currentShebang || '#!/usr/bin/env python3\n\n')
+    } else {
+      shebang = currentShebang || ''
+    }
 
     event.waitUntil(
       Promise.resolve(
-        supportsLanguage(document.languageId) && currentHeader ?
+        supportsLanguage(document.languageId) && currentHeader && headerInfo ?
           [
             TextEdit.replace(
               new Range(0, 0, 
                 (currentShebang ? (currentShebang.match(/\n/g) || []).length : 0) +
                 (currentShebang && documentText.substring(currentShebang.length, currentShebang.length + 1) === '\n' ? 1 : 0) +
                 12, 0),
-              (currentShebang || (isPython ? '#!/usr/bin/env python3\n\n' : '')) +
-              renderHeader(
-                document.languageId,
-                newHeaderInfo(document, getHeaderInfo(currentHeader))
-              )
+              shebang +
+              renderHeader(document.languageId, headerInfo)
             )
           ]
           : [] // No TextEdit to apply

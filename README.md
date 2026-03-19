@@ -63,6 +63,23 @@ The header automatically updates the "Updated" timestamp and author when you sav
 
 ---
 
+## Shebang Directive
+
+The Python header includes a built-in `shebang` field on its second line that controls automatic shebang insertion:
+
+| Value          | Effect                                                          |
+|----------------|-----------------------------------------------------------------|
+| `shebang: 1`   | Shebang is preserved if present, or auto-added for Python. *(default)* |
+| `shebang: 0`   | No shebang is inserted or preserved (even for Python files).    |
+
+To toggle the shebang, simply change the `1` to `0` (or vice versa) directly in the header and save the file. The shebang line (`#!/usr/bin/env python3`) will be automatically added or removed on the next save.
+
+**Example — disable shebang for a Python file:**
+
+Change `shebang: 1` to `shebang: 0` on the second line of the header, then save.
+
+---
+
 ## Header Examples
 
 ### C/C++ (80 characters)
@@ -87,15 +104,15 @@ The header automatically updates the "Updated" timestamp and author when you sav
 #!/usr/bin/env python3
 
 # ########################################################################### #
-# #                                                                           #
-# #                                                       :::      ::::::::   #
-# #   script.py                                          :+:      :+:    :+:  #
-# #                                                   +:+ +:+         +:+     #
-# #   By: your-login <your-login@student.42.fr>      +#+  +:+       +#+       #
-# #                                               +#+#+#+#+#+   +#+           #
-# #   Created: 2026/01/27 10:00:00 by your-login       #+#    #+#             #
-# #   Updated: 2026/01/27 12:00:00 by your-login      ###   ########.fr       #
-# #                                                                           #
+#   shebang: 1                                                                #
+#                                                          :::      ::::::::  #
+#   script.py                                            :+:      :+:    :+:  #
+#                                                      +:+ +:+         +:+    #
+#   By: your-login <your-login@student.42.fr>        +#+  +:+       +#+       #
+#                                                  +#+#+#+#+#+   +#+          #
+#   Created: 2026/01/27 10:00:00 by your-login          #+#    #+#            #
+#   Updated: 2026/01/27 12:00:00 by your-login         ###   ########.fr      #
+#                                                                             #
 # ########################################################################### #
 ```
 
