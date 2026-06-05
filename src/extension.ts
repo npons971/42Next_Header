@@ -10,7 +10,7 @@
 
 import { basename } from 'path'
 import vscode = require('vscode')
-import moment = require('moment')
+import dayjs = require('dayjs')
 
 import {
   ExtensionContext, TextEdit, TextEditorEdit, TextDocument, Position, Range
@@ -46,7 +46,7 @@ const newHeaderInfo = (document: TextDocument, headerInfo?: HeaderInfo) => {
   return Object.assign({},
     // This will be overwritten if headerInfo is not null
     {
-      createdAt: moment(),
+      createdAt: dayjs(),
       createdBy: user
     },
     headerInfo,
@@ -54,7 +54,7 @@ const newHeaderInfo = (document: TextDocument, headerInfo?: HeaderInfo) => {
       filename: basename(document.fileName),
       author: `${user} <${mail}>`,
       updatedBy: user,
-      updatedAt: moment()
+      updatedAt: dayjs()
     }
   )
 }

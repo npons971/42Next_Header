@@ -33,3 +33,7 @@ Thumbs.db
 # Temporary files
 *.tmp
 .cache/
+
+# pnpm files
+pnpm-lock.yaml
+pnpm-workspace.yaml
